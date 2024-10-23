@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,12 +13,11 @@ import lombok.NoArgsConstructor;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class TeacherEntity implements BaseEntity<Long> {
+@Table(schema = "school_db", name = "group_table")
+public class Group implements BaseEntity<Integer> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String lastname;
-    private String firstname;
-    private String patronymic;
+    private Integer id;
+    private String name;
 }
