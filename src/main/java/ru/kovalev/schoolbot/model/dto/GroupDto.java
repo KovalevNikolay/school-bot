@@ -1,0 +1,9 @@
+package ru.kovalev.schoolbot.model.dto;
+
+import lombok.Data;
+
+@Data
+public class GroupDto {
+    private Integer id;
+    private String name;
+}
