@@ -26,8 +26,10 @@ public class User implements BaseEntity<Long> {
     private String lastname;
     private String username;
     private String bio;
+
     @Enumerated(EnumType.STRING)
     private Role role;
+
     @Column(name = "role_id")
     private Integer roleId;
 }
