@@ -1,0 +1,5 @@
+CREATE TABLE IF NOT EXISTS school_db.class_room
+(
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(64) NOT NULL UNIQUE
+);
