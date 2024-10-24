@@ -11,12 +11,9 @@ import ru.kovalev.schoolbot.model.Role;
 import ru.kovalev.schoolbot.model.dto.UserDto;
 import ru.kovalev.schoolbot.service.TelegramMessageSender;
 import ru.kovalev.schoolbot.service.UserService;
+import ru.kovalev.schoolbot.util.BotUtil;
 
 import java.util.List;
-
-import static ru.kovalev.schoolbot.util.TelegramBotUtil.ROLE_COMMAND;
-import static ru.kovalev.schoolbot.util.TelegramBotUtil.START_COMMAND;
-import static ru.kovalev.schoolbot.util.TelegramBotUtil.WELCOME_MESSAGE;
 
 @Slf4j
 @Component
@@ -29,13 +26,14 @@ public class StartCommandHandler implements CommandHandler {
     @Override
     public void handle(Update update) {
         Long chatId = update.getMessage().getChatId();
-
+        String message = BotUtil.QUESTION;
         if (!userService.existById(chatId)) {
             log.info("Новый пользователь: {}", chatId);
             registerUser(update.getMessage().getChat());
+            message = BotUtil.WELCOME + " " + BotUtil.QUESTION;
         }
 
-        messageSender.sendMessage(chatId, WELCOME_MESSAGE, createInlineKeyboardMarkup());
+        messageSender.sendMessage(chatId, message, createKeyboard());
     }
 
     private void registerUser(Chat chat) {
@@ -50,18 +48,18 @@ public class StartCommandHandler implements CommandHandler {
                 .build();
 
         log.info("Регистрация нового пользователя: {} ", userDto);
-        userService.createUser(userDto);
+        userService.create(userDto);
     }
 
-    private InlineKeyboardMarkup createInlineKeyboardMarkup() {
+    private InlineKeyboardMarkup createKeyboard() {
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
         InlineKeyboardButton studentButton = InlineKeyboardButton.builder()
-                .callbackData(ROLE_COMMAND + " " + Role.STUDENT)
+                .callbackData(BotUtil.ROLE_COMMAND + " " + Role.STUDENT)
                 .text("Учащийся")
                 .build();
 
         InlineKeyboardButton teacherButton = InlineKeyboardButton.builder()
-                .callbackData(ROLE_COMMAND + " " + Role.TEACHER)
+                .callbackData(BotUtil.ROLE_COMMAND + " " + Role.TEACHER)
                 .text("Преподаватель")
                 .build();
 
@@ -70,6 +68,6 @@ public class StartCommandHandler implements CommandHandler {
     }
 
     public String getCommand() {
-        return START_COMMAND;
+        return BotUtil.START_COMMAND;
     }
 }

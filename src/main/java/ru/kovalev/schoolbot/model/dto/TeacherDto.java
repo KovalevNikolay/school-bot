@@ -9,7 +9,7 @@ public class TeacherDto {
     private String firstname;
     private String patronymic;
 
-    public String getFullname() {
+    public String getFullName() {
         return lastname + " " + firstname + " " + patronymic;
     }
 }

@@ -5,12 +5,12 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalTime;
 
 @Data
 @Entity
@@ -26,7 +26,9 @@ public class Lesson implements BaseEntity<Integer> {
     @Column(name = "lesson_number")
     private Integer lessonNumber;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "lesson_time_id")
-    private LessonTime lessonTime;
+    @Column(name = "start_time")
+    private LocalTime startTime;
+
+    @Column(name = "end_time")
+    private LocalTime endTime;
 }

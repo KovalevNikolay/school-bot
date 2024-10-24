@@ -12,11 +12,9 @@ import ru.kovalev.schoolbot.model.Role;
 import ru.kovalev.schoolbot.parser.TelegramCommandParser;
 import ru.kovalev.schoolbot.service.TelegramMessageSender;
 import ru.kovalev.schoolbot.service.UserService;
+import ru.kovalev.schoolbot.util.BotUtil;
 
 import java.util.List;
-
-import static ru.kovalev.schoolbot.util.TelegramBotUtil.ROLE_COMMAND;
-import static ru.kovalev.schoolbot.util.TelegramBotUtil.SELECT_ROLE_ID_MESSAGE;
 
 @Slf4j
 @Component
@@ -33,11 +31,11 @@ public class RoleCommandHandler implements CommandHandler {
         Long userId = update.getCallbackQuery().getMessage().getChatId();
         Integer messageId = update.getCallbackQuery().getMessage().getMessageId();
         Role role = commandParser.parseRole(update.getCallbackQuery().getData());
-        userService.getById(userId).ifPresent(userDto -> {
+        userService.findById(userId).ifPresent(userDto -> {
             userDto.setRole(role);
             userService.update(userDto);
             InlineKeyboardMarkup keyboardMarkup = createInlineKeyboardMarkup(role);
-            messageSender.sendEditMessageText(userId, messageId, SELECT_ROLE_ID_MESSAGE, keyboardMarkup);
+            messageSender.sendEditMessageText(userId, messageId, BotUtil.SELECT_ID_MESSAGE, keyboardMarkup);
         });
     }
 
@@ -51,6 +49,6 @@ public class RoleCommandHandler implements CommandHandler {
 
     @Override
     public String getCommand() {
-        return ROLE_COMMAND;
+        return BotUtil.ROLE_COMMAND;
     }
 }

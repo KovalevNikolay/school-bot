@@ -19,11 +19,11 @@ public class UserService {
         return userRepository.existsById(id);
     }
 
-    public void createUser(UserDto dto) {
+    public void create(UserDto dto) {
         userRepository.save(userMapper.toEntity(dto));
     }
 
-    public Optional<UserDto> getById(Long id) {
+    public Optional<UserDto> findById(Long id) {
         return userRepository.findById(id)
                 .map(userMapper::toDto);
     }
