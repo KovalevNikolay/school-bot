@@ -1,13 +1,14 @@
 package ru.kovalev.schoolbot.util;
 
-import lombok.experimental.UtilityClass;
+public final class TelegramBotUtil {
 
-@UtilityClass
-public class TelegramBotUtil {
+    public static final String START_COMMAND = "/start";
+    public static final String ROLE_COMMAND = "/role";
+    public static final String ROLE_ID_COMMAND = "/role_id";
+    public static final String WELCOME_MESSAGE = "Добро пожаловать! Вы учащийся или преподаватель?";
+    public static final String SELECT_ROLE_ID_MESSAGE = "Выберите нужный пункт из предложенного списка: ";
 
-    public final String START_COMMAND = "/start";
-    public final String ROLE_COMMAND = "/role";
-    public final String ROLE_ID_COMMAND = "/role_id";
-    public final String WELCOME_MESSAGE = "Добро пожаловать! Вы учащийся или преподаватель?";
-    public final String SELECT_ROLE_ID_MESSAGE = "Выберите нужный пункт из предложенного списка: ";
+    private TelegramBotUtil() {
+
+    }
 }
