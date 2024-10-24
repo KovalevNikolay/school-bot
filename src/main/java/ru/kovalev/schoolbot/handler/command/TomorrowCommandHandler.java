@@ -5,6 +5,7 @@ import ru.kovalev.schoolbot.factory.RoleHandlerFactory;
 import ru.kovalev.schoolbot.formatter.ScheduleFormatter;
 import ru.kovalev.schoolbot.repository.UserRepository;
 import ru.kovalev.schoolbot.service.TelegramMessageSender;
+import ru.kovalev.schoolbot.util.BotUtil;
 
 import java.time.LocalDate;
 
@@ -22,7 +23,7 @@ public class TomorrowCommandHandler extends DayCommandHandler {
 
     @Override
     public String getCommand() {
-        return null;
+        return BotUtil.TOMORROW;
     }
 
     @Override
