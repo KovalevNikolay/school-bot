@@ -27,10 +27,10 @@ public class BotUtil {
     public final String QUESTION = "Вы учащийся или преподаватель?";
     public final String SELECT_ID_MESSAGE = "Выберите нужный пункт из предложенного списка: ";
     public final String MENU_DESCRIPTION = """
-            '%s' - расписание занятий на сегодня
-            '%s' - расписание занятий на завтра
-            '%s' - расписание занятий на неделю
-            '%s' - выполнить настройку заново
+            *%s* \\- расписание занятий на сегодня
+            *%s* \\- расписание занятий на завтра
+            *%s* \\- расписание занятий на неделю
+            *%s* \\- выполнить настройку заново
             """.formatted(TODAY_TEXT, TOMORROW_TEXT, WEEK_TEXT, RESET_SETTINGS_TEXT);
 
     public final InlineKeyboardMarkup MAIN_MENU = new InlineKeyboardMarkup();

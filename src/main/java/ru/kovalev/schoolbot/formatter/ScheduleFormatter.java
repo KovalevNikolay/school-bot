@@ -1,6 +1,7 @@
 package ru.kovalev.schoolbot.formatter;
 
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 import ru.kovalev.schoolbot.model.dto.ScheduleDto;
 
 import java.time.LocalDate;
@@ -17,11 +18,14 @@ public class ScheduleFormatter {
 
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("EEEE, d MMMM yyyy");
         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+        String formattedDate = date.format(dateFormatter);
+
+        message.append("\n*").append(StringUtils.capitalize(formattedDate)).append("*\n\n");
 
         Map<Integer, List<ScheduleDto>> lessonsByNumber = schedule.stream()
                 .collect(Collectors.groupingBy(entry -> entry.getLesson().getLessonNumber()));
 
-        message.append("\n*").append(date.format(dateFormatter)).append("*\n\n");
+
 
         for (Map.Entry<Integer, List<ScheduleDto>> entry : lessonsByNumber.entrySet()) {
             List<ScheduleDto> lessons = entry.getValue();
@@ -30,21 +34,17 @@ public class ScheduleFormatter {
             String startTime = firstLesson.getLesson().getStartTime().format(timeFormatter);
             String endTime = firstLesson.getLesson().getEndTime().format(timeFormatter);
 
-            message.append(firstLesson.getLesson().getLessonNumber()).append(". ")
+            message.append(firstLesson.getLesson().getLessonNumber()).append("\\. ")
                     .append(startTime).append("–").append(endTime).append("\n");
 
             for (ScheduleDto lesson : lessons) {
-                message.append("     *").append(escapeMarkdownV2(lesson.getDiscipline().getName())).append("*\n")
-                        .append("     ").append(escapeMarkdownV2(lesson.getTeacher().getFullName())).append("\n")
-                        .append("     ").append(escapeMarkdownV2(lesson.getClassRoom().getName())).append("\n");
+                message.append("     *").append(lesson.getDiscipline().getName()).append("*\n")
+                        .append("     ").append(lesson.getTeacher().getFullName()).append("\n")
+                        .append("     *").append(lesson.getClassRoom().getName()).append("*\n");
             }
             message.append("\n");
         }
 
         return message.toString();
-    }
-
-    private String escapeMarkdownV2(String text) {
-        return text.replaceAll("([*_\\[\\]()~`>#+\\-=|{}.!])", "\\\\$1");
     }
 }
